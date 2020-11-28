@@ -1,14 +1,15 @@
 import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import { useAuth } from '../lib/auth'
 
 export default function Home() {
-  return (
-    <div className={styles.container}>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <h1 className='h1'>Next js</h1>
-    </div>
-  )
+  const auth = useAuth()
+  return <div>
+    <Head>
+      <title>Create Next App</title>
+      <link rel="icon" href="/favicon.ico" />
+    </Head>
+    <h1>{auth?.user?.email}</h1>
+    <button onClick={e => auth.signinWithGithub()}>Sign in</button>
+    {auth?.user && <button onClick={e => auth.signout()}>Sign Out</button>}
+  </div>
 }
